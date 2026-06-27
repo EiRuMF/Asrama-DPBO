@@ -142,26 +142,7 @@ public class MahasiswaBiz implements IMahasiswaBiz{
         }
     }
     
-    @Override
-    public void bayarSewa(String nim, int bulan) {
 
-        Mahasiswa mhs = cariByNim(nim);
-
-        if (mhs == null) {
-            return;
-        }
-
-        if (!mhs.isStatusPenghuni()) {
-
-            System.out.println("Belum memiliki kamar");
-            return;
-        }
-
-        double total = bulan * 500000;
-
-            System.out.println("Pembayaran berhasil");
-            System.out.println("Total : Rp " + total);
-    }
 
     @Override
     public boolean sudahPunyaKamar(String nim) {
@@ -172,5 +153,36 @@ public class MahasiswaBiz implements IMahasiswaBiz{
     // Method tambahan khusus di class ini (boleh ada method di luar interface) 
     public void tambahMahasiswa(Mahasiswa mhs) {
         daftarMahasiswa.add(mhs);
+    }
+    
+    @Override
+    public void bayarSewa(String nim, double nominal) {
+
+    Mahasiswa mhs = cariByNim(nim);
+
+    if (mhs == null) {
+        System.out.println("Mahasiswa tidak ditemukan");
+        return;
+    }
+
+    if (nominal <= 0) {
+        System.out.println("Nominal harus lebih dari 0");
+        return;
+    }
+
+    if (nominal > mhs.getSisaTagihan()) {
+        System.out.println("Nominal melebihi sisa tagihan");
+        return;
+        }
+
+        mhs.tambahPembayaran(nominal);
+
+        System.out.println("\n=== PEMBAYARAN BERHASIL ===");
+        System.out.println("Dibayar : Rp " + nominal);
+        System.out.println("Sisa    : Rp " + mhs.getSisaTagihan());
+
+        if (mhs.getSisaTagihan() == 0) {
+            System.out.println("Status : LUNAS");
+        }
     }
 }

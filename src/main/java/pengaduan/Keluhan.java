@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 public class Keluhan {
+    
+    private static int counter = 1;
 
     private String idKeluhan;
     private String judul;
@@ -26,7 +28,7 @@ public class Keluhan {
                    String judul,
                    String deskripsi,
                    String kategori) {   
-        this.idKeluhan = idKeluhan;
+        this.idKeluhan = "KL" + String.format("%03d", counter++);
         this.judul = judul;
         this.deskripsi = deskripsi;
         this.kategori = kategori;
@@ -36,14 +38,7 @@ public class Keluhan {
         this.daftarTanggapan = new ArrayList<>();
     }
     
-    Keluhan k1 =
-new Keluhan(
-    "KL001",
-    "AC Rusak",
-    "AC tidak dingin",
-    "Fasilitas"
-);
-
+    
     public void buatLaporan() {
         System.out.println(this);
     }

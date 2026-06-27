@@ -26,7 +26,7 @@ public interface IMahasiswaBiz {
     
     void tampilkanKeluhan(String nim);
     
-    void bayarSewa(String nim, int bulan);
+    void bayarSewa(String nim, double nominal);
     
     boolean sudahPunyaKamar(String nim);
 }

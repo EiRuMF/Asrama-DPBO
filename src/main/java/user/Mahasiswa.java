@@ -16,6 +16,8 @@ public class Mahasiswa extends User {
     private String nim;
     private String kamarId;
     private boolean statusPenghuni;
+    private double totalSewa;
+    private double totalDibayar;
     
     private List<Keluhan> daftarKeluhan; 
 
@@ -25,6 +27,10 @@ public class Mahasiswa extends User {
         this.kamarId = null; 
         this.statusPenghuni =  false;
         this.daftarKeluhan = new ArrayList<>();
+        
+        this.totalSewa = 7000000;
+        this.totalDibayar = 0;
+        
     }
     
     
@@ -52,5 +58,19 @@ public class Mahasiswa extends User {
         this.statusPenghuni = true;
     }
 
+    public double getTotalTagihan() {
+        return totalSewa;
+    }
 
+    public double getTotalDibayar() {
+        return totalDibayar;
+    }
+
+    public double getSisaTagihan() {
+        return totalSewa - totalDibayar;
+    }
+
+    public void tambahPembayaran(double nominal) {
+        totalDibayar += nominal;
+    }
 }

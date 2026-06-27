@@ -112,9 +112,10 @@ public class Main {
         while(aktif){
             System.out.println("\n=== MENU MAHASISWA ===");
             System.out.println("1. Lihat Info Kamar");
-            System.out.println("2. Ajukan Keluhan");
-            System.out.println("3. Lihat Status Keluhan");
-            System.out.println("4. Bayar Sewa");
+            System.out.println("2. Daftar Kamar");
+            System.out.println("3. Ajukan Keluhan");
+            System.out.println("4. Lihat Status Keluhan");
+            System.out.println("5. Bayar Sewa");
             System.out.println("0. Logout");
 
             System.out.println("Pilih menu : ");
@@ -126,22 +127,28 @@ public class Main {
                 break;
 
                 case "2":
+                    System.out.println("Daftar kamar kamu");
+                    mhs.assignKamar(mhs.getNim());
+
+                case "3":
                     System.out.println("Judul : ");
                     String judul = scanner.nextLine();
                     
                     System.out.println("Deskripsi : ");
                     String deskripsi = scanner.nextLine();
                     
+                    
                     Keluhan keluhan = new Keluhan("KL", judul, deskripsi, "Fasilitas");
+                    
                     
                     mahasiswaBiz.ajukanKeluhan(mhs.getNim(),keluhan);
                     break;
-
-                case "3":
-                    mahasiswaBiz.tampilkanKeluhan(mhs.getNim());
-                    break;
                 
                 case "4":
+                    mahasiswaBiz.tampilkanKeluhan(mhs.getNim());
+                    break;
+                    
+                case "5":
                     System.out.println("Jumlah Bulan : ");
                     int bulan = Integer.parseInt(scanner.nextLine());
                     
