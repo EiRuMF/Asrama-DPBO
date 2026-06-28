@@ -173,7 +173,94 @@ public class Main {
         switch(pilihan){
 
             case "1":
-                adn.tampilkanDaftarMahasiswa();
+                boolean kelolaMahasiswa = true;
+
+                while (kelolaMahasiswa) {
+                    System.out.println("\n===== KELOLA MAHASISWA =====");
+                    System.out.println("1. Lihat Semua Mahasiswa");
+                    System.out.println("2. Tambah Mahasiswa");
+                    System.out.println("3. Hapus Mahasiswa");
+                    System.out.println("4. Cari Mahasiswa");
+                    System.out.println("5. Assign Kamar");
+                    System.out.println("0. Kembali");
+
+                    System.out.print("Pilih : ");
+                    String pilih = scanner.nextLine();
+
+                    switch (pilih) {
+                        case "1":
+                            mahasiswaBiz.tampilkanSemuaMahasiswa();
+                            break;
+
+                        case "2":
+                            System.out.print("ID : ");
+                            String id = scanner.nextLine();
+
+                            System.out.print("Nama : ");
+                            String nama = scanner.nextLine();
+
+                            System.out.print("Email : ");
+                            String email = scanner.nextLine();
+
+                            System.out.print("Password : ");
+                            String password = scanner.nextLine();
+
+                            System.out.print("NIM : ");
+                            String nim = scanner.nextLine();
+
+                            Mahasiswa mhs = new Mahasiswa(id, nama, email, password, nim);
+                            mahasiswaBiz.tambahMahasiswa(mhs);
+                            System.out.println("Mahasiswa berhasil ditambahkan.");
+                            break;
+
+                        case "3":
+                            System.out.print("Masukkan NIM : ");
+                            String nimHapus = scanner.nextLine();
+
+                            boolean berhasil =
+                                    mahasiswaBiz.hapusMahasiswa(nimHapus);
+
+                            if (berhasil) {
+
+                                System.out.println(
+                                        "Mahasiswa berhasil dihapus.");
+
+                            } else {
+
+                                System.out.println(
+                                        "Mahasiswa tidak ditemukan.");
+                            }
+                            break;
+
+                        case "4":
+                            System.out.print("Masukkan NIM : ");
+                            String nimCari = scanner.nextLine();
+                            mahasiswaBiz.tampilkanDetailMahasiswa(nimCari);
+                            break;
+
+                        case "5":
+                            System.out.print("NIM : ");
+                            String nimAssign = scanner.nextLine();
+
+                            System.out.print("Nomor Kamar : ");
+                            String kamar = scanner.nextLine();
+
+                            try {
+                                mahasiswaBiz.assignKamar(nimAssign, kamar);
+                                System.out.println("Kamar berhasil diberikan.");
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                            break;
+
+                        case "0":
+                            kelolaMahasiswa = false;
+                            break;
+
+                        default:
+                            System.out.println("Pilihan tidak valid.");
+                    }
+                }
                 break;
 
             case "2":
@@ -242,38 +329,37 @@ public class Main {
                             }
                             break;
                             
-                            case "5":
-                                System.out.print("Nomor Kamar : ");
-                                String nomorRusak = scanner.nextLine();
+                        case "5":
+                            System.out.print("Nomor Kamar : ");
+                            String nomorRusak = scanner.nextLine();
 
-                                Kamar kRusak = asrama.cariKamar(nomorRusak);
+                            Kamar kRusak = asrama.cariKamar(nomorRusak);
 
-                                if(kRusak != null){
-                                    System.out.print("Catatan : ");
-                                    String catatan = scanner.nextLine();
-                                    kRusak.laporkanFasilitasRusak(catatan);
-                                }else{
-
-                                    System.out.println("Kamar tidak ditemukan.");
-                                }
-                                break;
+                            if(kRusak != null){
+                                System.out.print("Catatan : ");
+                                String catatan = scanner.nextLine();
+                                kRusak.laporkanFasilitasRusak(catatan);
+                            }else{
+                                System.out.println("Kamar tidak ditemukan.");
+                            }
+                            break;
                                 
-                            case "6":
-                                System.out.print("Nomor Kamar : ");
-                                String nomorPerbaiki = scanner.nextLine();
+                        case "6":
+                            System.out.print("Nomor Kamar : ");
+                            String nomorPerbaiki = scanner.nextLine();
 
-                                Kamar kPerbaiki = asrama.cariKamar(nomorPerbaiki);
+                            Kamar kPerbaiki = asrama.cariKamar(nomorPerbaiki);
 
-                                if(kPerbaiki != null){
-                                    kPerbaiki.perbaikiFasilitas();
-                                }else{
-                                    System.out.println("Kamar tidak ditemukan.");
-                                }
-                                break;
+                            if(kPerbaiki != null){
+                                kPerbaiki.perbaikiFasilitas();
+                            }else{
+                                System.out.println("Kamar tidak ditemukan.");
+                            }
+                            break;
                                 
-                            case "0":
-                                kelolaKamar = false;
-                                break;
+                        case "0":
+                            kelolaKamar = false;
+                            break;
                     }
                 }
                 break;

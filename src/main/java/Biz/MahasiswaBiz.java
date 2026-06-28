@@ -169,8 +169,58 @@ public class MahasiswaBiz implements IMahasiswaBiz{
         return mhs != null && mhs.isStatusPenghuni();
     }
 
-    // Method tambahan khusus di class ini (boleh ada method di luar interface) 
     public void tambahMahasiswa(Mahasiswa mhs) {
         daftarMahasiswa.add(mhs);
+    }
+    
+    public boolean hapusMahasiswa(String nim){
+        Mahasiswa mhs = cariByNim(nim);
+        if(mhs != null){
+            daftarMahasiswa.remove(mhs);
+            return true;
+        }
+        return false;
+    }
+    
+    public void tampilkanSemuaMahasiswa() {
+        if (daftarMahasiswa.isEmpty()) {
+
+            System.out.println("Belum ada data mahasiswa.");
+            return;
+        }
+
+        System.out.println("\n===== DAFTAR MAHASISWA =====");
+
+        for (Mahasiswa m : daftarMahasiswa) {
+
+            System.out.println("----------------------------");
+            System.out.println("ID      : " + m.getId());
+            System.out.println("Nama    : " + m.getName());
+            System.out.println("NIM     : " + m.getNim());
+            System.out.println("Email   : " + m.getEmail());
+
+            if (m.getKamarId() == null) {
+                System.out.println("Kamar   : Belum ada");
+            } else {
+                System.out.println("Kamar   : " + m.getKamarId());
+            }
+        }
+    }
+    
+    public void tampilkanDetailMahasiswa(String nim) {
+        Mahasiswa m = cariByNim(nim);
+
+        if (m == null) {
+
+            System.out.println("Mahasiswa tidak ditemukan.");
+            return;
+        }
+
+        System.out.println("\n===== DETAIL MAHASISWA =====");
+        System.out.println("ID      : " + m.getId());
+        System.out.println("Nama    : " + m.getName());
+        System.out.println("NIM     : " + m.getNim());
+        System.out.println("Email   : " + m.getEmail());
+        System.out.println("Kamar   : " + m.getKamarId());
     }
 }
