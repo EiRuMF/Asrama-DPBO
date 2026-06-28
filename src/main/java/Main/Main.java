@@ -15,6 +15,8 @@ import user.User;
 import user.Mahasiswa;
 import user.Petugas;
 import user.Admin;
+import Asrama.Asrama;
+import Asrama.Kamar;
 
 import exception.LoginGagalException;
 
@@ -28,6 +30,7 @@ public class Main {
     private static AdminBiz adminBiz = new AdminBiz();
     private static PetugasBiz petugasBiz     = new PetugasBiz();
     private static Scanner scanner = new Scanner(System.in);
+    private static Asrama asrama = new Asrama("Asrama Putra");
 
     private static User prosesLogin(String email, String password)
             throws LoginGagalException {
@@ -156,7 +159,145 @@ public class Main {
         }
     }
 
-    private static void menuAdmin(Admin adn){}
+    private static void menuAdmin(Admin adn){
+
+    boolean aktif = true;
+
+    while(aktif){
+
+        adn.tampilkanMenu();
+
+        System.out.print("Pilih menu : ");
+        String pilihan = scanner.nextLine();
+
+        switch(pilihan){
+
+            case "1":
+                adn.tampilkanDaftarMahasiswa();
+                break;
+
+            case "2":
+                boolean kelolaKamar = true;
+                while(kelolaKamar){
+                    System.out.println("\n=== KELOLA DATA KAMAR ===");
+                    System.out.println("1. Tambah Kamar");
+                    System.out.println("2. Hapus Kamar");
+                    System.out.println("3. Lihat Semua Kamar");
+                    System.out.println("4. Tambah Penghuni");
+                    System.out.println("5. Lapor Kerusakan");
+                    System.out.println("6. Perbaiki Fasilitas");
+                    System.out.println("0. Kembali");
+
+                    System.out.print("Pilih : ");
+                    String pilihKamar = scanner.nextLine();
+
+                    switch(pilihKamar){
+
+                        case "1":
+
+                            System.out.print("Nomor Kamar : ");
+                            String nomor = scanner.nextLine();
+
+                            System.out.print("Lantai : ");
+                            int lantai = Integer.parseInt(scanner.nextLine());
+
+                            Kamar kamarBaru = new Kamar(nomor, lantai);
+
+                            asrama.tambahKamar(kamarBaru);
+                            System.out.println("Kamar berhasil ditambahkan.");
+                            break;
+                            
+                        case "2":
+                            System.out.print("Nomor Kamar : ");
+                            String nomorHapus = scanner.nextLine();
+
+                            if(asrama.hapusKamar(nomorHapus)){
+                                System.out.println("Kamar berhasil dihapus.");
+                            }else{
+                                System.out.println("Kamar tidak ditemukan.");
+                            }
+                            break;
+                            
+                        case "3":
+                            asrama.tampilkanSemuaKamar();
+                            break;
+                            
+                        case "4":
+                            System.out.print("Nomor Kamar : ");
+                            String nomorCari = scanner.nextLine();
+
+                            Kamar kamar =
+                                    asrama.cariKamar(nomorCari);
+
+                            if(kamar != null){
+
+                                System.out.print("Nama Penghuni : ");
+                                String nama = scanner.nextLine();
+
+                                kamar.tambahPenghuni(nama);
+
+                            }else{
+
+                                System.out.println("Kamar tidak ditemukan.");
+                            }
+                            break;
+                            
+                            case "5":
+                                System.out.print("Nomor Kamar : ");
+                                String nomorRusak = scanner.nextLine();
+
+                                Kamar kRusak = asrama.cariKamar(nomorRusak);
+
+                                if(kRusak != null){
+                                    System.out.print("Catatan : ");
+                                    String catatan = scanner.nextLine();
+                                    kRusak.laporkanFasilitasRusak(catatan);
+                                }else{
+
+                                    System.out.println("Kamar tidak ditemukan.");
+                                }
+                                break;
+                                
+                            case "6":
+                                System.out.print("Nomor Kamar : ");
+                                String nomorPerbaiki = scanner.nextLine();
+
+                                Kamar kPerbaiki = asrama.cariKamar(nomorPerbaiki);
+
+                                if(kPerbaiki != null){
+                                    kPerbaiki.perbaikiFasilitas();
+                                }else{
+                                    System.out.println("Kamar tidak ditemukan.");
+                                }
+                                break;
+                                
+                            case "0":
+                                kelolaKamar = false;
+                                break;
+                    }
+                }
+                break;
+
+            case "3":
+                System.out.print("Masukkan ID Pembayaran : ");
+                String id = scanner.nextLine();
+
+                adn.approvePembayaran(id);
+                break;
+
+            case "4":
+                adn.generateLaporan();
+                break;
+
+            case "0":
+                aktif = false;
+                break;
+
+            default:
+                System.out.println("Pilihan tidak valid.");
+        }
+    }
+}
     private static void menuPetugas(Petugas ptg){}
 
 }
