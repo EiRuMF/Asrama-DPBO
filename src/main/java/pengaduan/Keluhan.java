@@ -41,10 +41,8 @@ public class Keluhan implements Reportable{
 
     public void tambahTanggapan(Tanggapan tanggapan) {
         daftarTanggapan.add(tanggapan);
-
-        if (status.equalsIgnoreCase("Menunggu")) {
-            status = "Diproses";
-        }
+        
+        this.status = tanggapan.getStatusUpdate();
     }
 
     public List<Tanggapan> getDaftarTanggapan() {

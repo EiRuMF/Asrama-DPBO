@@ -13,12 +13,8 @@ import java.util.List;
 public interface IPetugasBiz {
     List<Petugas> getAllPetugas();
     
+    void lihatSemuaKeluhan();
     
-
-    
-
-    
-
-    
+    void prosesKeluhan(String idKeluhan, String namaPetugas, String statusUpdate, String isiTanggapan);
 
 }

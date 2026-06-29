@@ -11,17 +11,22 @@ package Biz;
 import user.Petugas;
 import java.util.ArrayList;
 import java.util.List;
+import pengaduan.Keluhan;
+import pengaduan.Tanggapan;
 
 
 public class PetugasBiz implements IPetugasBiz {
      private List<Petugas> daftarPetugas;
+     private MahasiswaBiz mahasiswaBiz;
 
-    public PetugasBiz() {
-        this.daftarPetugas = new ArrayList<>();
+    public PetugasBiz(MahasiswaBiz mahasiswaBiz) {
+        this.mahasiswaBiz = mahasiswaBiz;
+        
+        daftarPetugas = new ArrayList<>();
         inisialisasiDummy();
     }
     
-        private void inisialisasiDummy() {
+    private void inisialisasiDummy() {
         Petugas ptg1 = new Petugas(
             "P001", "kakang", "kakang@petugas.ac.id", "ptg123", "Pagi"
         );      
@@ -40,8 +45,50 @@ public class PetugasBiz implements IPetugasBiz {
 
 
     
-    public void cekKeluhan() {
-        System.out.println("blm ada");
+    @Override
+    public void lihatSemuaKeluhan() {
+
+        List<Keluhan> list = mahasiswaBiz.getDaftarKeluhan();
+
+        if (list.isEmpty()) {
+            System.out.println("Belum ada keluhan.");
+            return;
+        }
+
+        System.out.println("\n===== DAFTAR KELUHAN =====");
+
+        for (Keluhan k : list) {
+
+            System.out.println("----------------------");
+            System.out.println("ID       : " + k.getIdKeluhan());
+            System.out.println("Judul    : " + k.getJudul());
+            System.out.println("Kategori : " + k.getKategori());
+            System.out.println("Status   : " + k.getStatus());
+
+        }
+    }
+    
+    @Override
+    public void prosesKeluhan(String idKeluhan, String namaPetugas,String statusUpdate, String isiTanggapan) {
+
+        for (Keluhan k : mahasiswaBiz.getDaftarKeluhan()) {
+
+            if (k.getIdKeluhan().equalsIgnoreCase(idKeluhan)) {
+        
+                
+                Tanggapan t = new Tanggapan(namaPetugas, statusUpdate ,isiTanggapan);
+                
+                k.tambahTanggapan(t);
+
+                System.out.println("Keluhan berhasil diproses.");
+
+                return;
+            }
+
+        }
+
+        System.out.println("ID Keluhan tidak ditemukan.");
+
     }
     
 }

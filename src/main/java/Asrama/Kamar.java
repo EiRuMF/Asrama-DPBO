@@ -3,59 +3,83 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Asrama;
-
+import Asrama.Fasilitas;
 /**
  *
  * @author IVAN
  */
-import user.Mahasiswa;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Kamar {
-    private int nomorKamar;
-    private int kapasitas;
+
+    private String nomorKamar;
     private int lantai;
-    private double hargaSemester;
+    private final int kapasitas;
+    private List<String> daftarPenghuni;
+    private Fasilitas fasilitas;
 
-    private List<Mahasiswa> penghuni;
-
-    public Kamar(int nomorKamar,
-                 int kapasitas,
-                 int lantai,
-                 double hargaSemester) {
-
+    public Kamar(String nomorKamar, int lantai) {
         this.nomorKamar = nomorKamar;
-        this.kapasitas = kapasitas;
         this.lantai = lantai;
-        this.hargaSemester = hargaSemester;
-
-        penghuni = new ArrayList<>();
+        this.kapasitas = 4;
+        this.daftarPenghuni = new ArrayList<>();
+        this.fasilitas = new Fasilitas();
     }
-    
-        public int getNomorKamar() {
+
+    public String getNomorKamar() {
         return nomorKamar;
-    }
-
-    public int getKapasitas() {
-        return kapasitas;
     }
 
     public int getLantai() {
         return lantai;
     }
 
-    public double getHargaSemester() {
-        return hargaSemester;
+    public int getKapasitas() {
+        return kapasitas;
     }
 
-    public List<Mahasiswa> getPenghuni() {
-        return penghuni;
+    public List<String> getDaftarPenghuni() {
+        return daftarPenghuni;
     }
 
-    
-    
+    public Fasilitas getFasilitas() {
+        return fasilitas;
+    }
 
+    public void tambahPenghuni(String nama) {
+        if (daftarPenghuni.size() < kapasitas) {
+            daftarPenghuni.add(nama);
+        } else {
+            System.out.println("Kamar " + nomorKamar + " sudah penuh.");
+        }
+    }
 
+    public boolean isKamarPenuh() {
+        return daftarPenghuni.size() >= kapasitas;
+    }
 
+    public void laporkanFasilitasRusak(String catatan) {
+        System.out.println("Laporan kerusakan kamar " + nomorKamar);
+        fasilitas.laporkanRusak(catatan);
+    }
+
+    public void perbaikiFasilitas() {
+        System.out.println("Perbaikan fasilitas kamar " + nomorKamar);
+        fasilitas.tandaiSudahDiperbaiki();
+    }
+
+    public void tampilkanInfo() {
+        System.out.println("Nomor Kamar : " + nomorKamar);
+        System.out.println("Lantai      : " + lantai);
+        System.out.println("Penghuni    : " + daftarPenghuni.size() + "/" + kapasitas);
+
+        if (daftarPenghuni.isEmpty()) {
+            System.out.println("Daftar Penghuni : -");
+        } else {
+            System.out.println("Daftar Penghuni : " + String.join(", ", daftarPenghuni));
+        }
+
+        System.out.println(fasilitas);
+    }
 }

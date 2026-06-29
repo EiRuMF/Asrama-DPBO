@@ -85,29 +85,10 @@ public class MahasiswaBiz implements IMahasiswaBiz{
         }
     }
     
-    
-    @Override    
-    public void assignKamar(String nim, String kamarId) throws KamarPenuhException {
         
-        int jumlahPenghuni = 0;
-        for (Mahasiswa m : daftarMahasiswa) {
-            if (kamarId.equals(m.getKamarId())) {
-                jumlahPenghuni++;
-            }
-        }
-
-        
-        if (jumlahPenghuni >= KAPASITAS_KAMAR) {
-            throw new KamarPenuhException(kamarId);
-        }
-
-        
-        Mahasiswa mhs = cariByNim(nim);
-        if (mhs != null) {
-            mhs.assignKamar(kamarId);
-        }
+    public List<Keluhan> getDaftarKeluhan() {
+        return daftarKeluhan;
     }
-    
     
 
     @Override

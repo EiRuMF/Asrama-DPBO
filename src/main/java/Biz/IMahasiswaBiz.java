@@ -20,8 +20,6 @@ public interface IMahasiswaBiz {
     
     void lihatInfoKamar(String nim);
     
-    void assignKamar(String nim, String kamarId) throws KamarPenuhException;
-    
     void ajukanKeluhan(String nim, String judul, String deskripsi,String kategori);
     
     void tampilkanKeluhan(String nim);

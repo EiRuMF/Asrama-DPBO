@@ -29,8 +29,7 @@ public class Mahasiswa extends User {
         this.daftarKeluhan = new ArrayList<>();
         
         this.totalSewa = 7000000;
-        this.totalDibayar = 0;
-        
+        this.totalDibayar = 0;  
     }
     
     

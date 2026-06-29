@@ -26,7 +26,7 @@ import pengaduan.Keluhan;
 public class Main {
     private static MahasiswaBiz mahasiswaBiz = new MahasiswaBiz();
     private static AdminBiz adminBiz = new AdminBiz();
-    private static PetugasBiz petugasBiz = new PetugasBiz();
+    private static PetugasBiz petugasBiz = new PetugasBiz(mahasiswaBiz);
     private static Scanner scanner = new Scanner(System.in);
 
     private static User prosesLogin(String email, String password)
@@ -160,6 +160,43 @@ public class Main {
     }
 
     private static void menuAdmin(Admin adn){}
-    private static void menuPetugas(Petugas ptg){}
+    private static void menuPetugas(Petugas ptg){
+        boolean aktif = true;
+
+        while(aktif){
+            System.out.println("\n=== MENU PETUGAS ===");
+            System.out.println("1. Lihat Keluhan Mahasiswa");        
+            System.out.println("2. Proses Keluhan");
+            System.out.println("0. Logout");
+
+            System.out.println("Pilih menu : ");
+            String pilihan = scanner.nextLine();
+
+            switch (pilihan){
+                case "1":
+                    petugasBiz.lihatSemuaKeluhan();
+                break;
+
+                case "2":
+                    System.out.print("ID Keluhan : ");
+                    String id = scanner.nextLine();
+                    
+                    System.out.print("Status : ");
+                    String status = scanner.nextLine();
+
+                    System.out.print("Catatan : ");
+                    String catatan = scanner.nextLine();
+
+                    petugasBiz.prosesKeluhan(id,ptg.getName(),status, catatan);
+                    break;
+                       
+                case "0":
+                    aktif = false;
+                    break;
+            }
+
+        }
+
+    }
 
 }
