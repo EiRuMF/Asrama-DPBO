@@ -36,6 +36,15 @@ public class Mahasiswa extends User {
     
     @Override
     public void tampilkanMenu() {
+        System.out.println("\n=============================");
+        System.out.println("  MENU MAHASISWA - " + getName());
+        System.out.println("=============================");
+        System.out.println("1. Lihat Info Kamar");        
+        System.out.println("2. Ajukan Keluhan");
+        System.out.println("3. Lihat Status Keluhan");
+        System.out.println("4. Bayar Sewa");
+        System.out.println("0. Logout");
+        System.out.println("=============================");
     }
     
     public void tambahKeluhan(Keluhan keluhan){
@@ -75,5 +84,9 @@ public class Mahasiswa extends User {
 
     public void tambahPembayaran(double nominal) {
         totalDibayar += nominal;
+    }
+    
+    public boolean isLunas(){
+        return getSisaTagihan() == 0;
     }
 }

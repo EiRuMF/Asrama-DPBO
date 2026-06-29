@@ -11,6 +11,7 @@ package Biz;
 
 import user.Mahasiswa;
 import exception.KamarPenuhException;
+import exception.PembayaranGagalException;
 import java.util.ArrayList;
 import java.util.List;
 import pengaduan.Keluhan;
@@ -159,24 +160,20 @@ public class MahasiswaBiz implements IMahasiswaBiz{
 }
     
     @Override
-    public void bayarSewa(String nim, double nominal) {
+    public void bayarSewa(String nim, double nominal) throws PembayaranGagalException{
+        
 
-    Mahasiswa mhs = cariByNim(nim);
+        Mahasiswa mhs = cariByNim(nim);
 
-    if (mhs == null) {
-        System.out.println("Mahasiswa tidak ditemukan");
-        return;
-    }
+        if(mhs == null)
+            throw new PembayaranGagalException("Mahasiswa tidak ditemukan.");
 
-    if (nominal <= 0) {
-        System.out.println("Nominal harus lebih dari 0");
-        return;
-    }
+        if(nominal <= 0)
+            throw new PembayaranGagalException("Nominal harus lebih dari 0.");
 
-    if (nominal > mhs.getSisaTagihan()) {
-        System.out.println("Nominal melebihi sisa tagihan");
-        return;
-        }
+        if(nominal > mhs.getSisaTagihan())
+            throw new PembayaranGagalException("Nominal melebihi sisa tagihan.");
+        
 
         mhs.tambahPembayaran(nominal);
 
@@ -188,4 +185,5 @@ public class MahasiswaBiz implements IMahasiswaBiz{
             System.out.println("Status : LUNAS");
         }
     }
+        
 }

@@ -28,11 +28,9 @@ public class Petugas extends User {
         System.out.println("  MENU PETUGAS - " + getName());
         System.out.println("  Shift: " + shift);
         System.out.println("=============================");
-        System.out.println("[1] Lihat Keluhan Masuk");
-        System.out.println("[2] Panggil Teknisi");
-        System.out.println("[3] Catat Pelanggaran");
-        System.out.println("[4] Lihat Tugas Harian");
-        System.out.println("[0] Logout");
+        System.out.println("1. Lihat Keluhan Mahasiswa");        
+        System.out.println("2. Proses Keluhan");
+        System.out.println("0. Logout");
         System.out.println("=============================");
     }
 }

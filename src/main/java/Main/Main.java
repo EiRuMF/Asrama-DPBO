@@ -17,6 +17,7 @@ import user.Petugas;
 import user.Admin;
 
 import exception.LoginGagalException;
+import exception.PembayaranGagalException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,12 +111,7 @@ public class Main {
         boolean aktif = true;
 
         while(aktif){
-            System.out.println("\n=== MENU MAHASISWA ===");
-            System.out.println("1. Lihat Info Kamar");        
-            System.out.println("2. Ajukan Keluhan");
-            System.out.println("3. Lihat Status Keluhan");
-            System.out.println("4. Bayar Sewa");
-            System.out.println("0. Logout");
+            mhs.tampilkanMenu();    
 
             System.out.println("Pilih menu : ");
             String pilihan = scanner.nextLine();
@@ -145,10 +141,18 @@ public class Main {
                 case "4":
                     mahasiswaBiz.lihatTagihan(mhs.getNim());
                     
+                    try {
                     System.out.println("Masukkan nominal pembayaran : ");
                     double nominal = Double.parseDouble(scanner.nextLine());
                     
                     mahasiswaBiz.bayarSewa(mhs.getNim(), nominal);
+                    
+                    } catch (PembayaranGagalException e) {
+                        System.out.println("[ERROR] " + e.getMessage());
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("[ERROR] Nominal harus berupa angka.");
+                    }
                     break;
                     
                 case "0":
@@ -164,10 +168,7 @@ public class Main {
         boolean aktif = true;
 
         while(aktif){
-            System.out.println("\n=== MENU PETUGAS ===");
-            System.out.println("1. Lihat Keluhan Mahasiswa");        
-            System.out.println("2. Proses Keluhan");
-            System.out.println("0. Logout");
+            ptg.tampilkanMenu();         
 
             System.out.println("Pilih menu : ");
             String pilihan = scanner.nextLine();
