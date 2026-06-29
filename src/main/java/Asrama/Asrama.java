@@ -62,4 +62,8 @@ public class Asrama {
         }
         return null;
     }
+    
+    public boolean kamarTersedia(String nomorKamar){
+        return cariKamar(nomorKamar) != null;
+    }
 }

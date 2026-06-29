@@ -271,8 +271,6 @@ public class Main {
                     System.out.println("2. Hapus Kamar");
                     System.out.println("3. Lihat Semua Kamar");
                     System.out.println("4. Tambah Penghuni");
-                    System.out.println("5. Lapor Kerusakan");
-                    System.out.println("6. Perbaiki Fasilitas");
                     System.out.println("0. Kembali");
 
                     System.out.print("Pilih : ");
@@ -329,34 +327,6 @@ public class Main {
                             }
                             break;
                             
-                        case "5":
-                            System.out.print("Nomor Kamar : ");
-                            String nomorRusak = scanner.nextLine();
-
-                            Kamar kRusak = asrama.cariKamar(nomorRusak);
-
-                            if(kRusak != null){
-                                System.out.print("Catatan : ");
-                                String catatan = scanner.nextLine();
-                                kRusak.laporkanFasilitasRusak(catatan);
-                            }else{
-                                System.out.println("Kamar tidak ditemukan.");
-                            }
-                            break;
-                                
-                        case "6":
-                            System.out.print("Nomor Kamar : ");
-                            String nomorPerbaiki = scanner.nextLine();
-
-                            Kamar kPerbaiki = asrama.cariKamar(nomorPerbaiki);
-
-                            if(kPerbaiki != null){
-                                kPerbaiki.perbaikiFasilitas();
-                            }else{
-                                System.out.println("Kamar tidak ditemukan.");
-                            }
-                            break;
-                                
                         case "0":
                             kelolaKamar = false;
                             break;
@@ -365,14 +335,7 @@ public class Main {
                 break;
 
             case "3":
-                System.out.print("Masukkan ID Pembayaran : ");
-                String id = scanner.nextLine();
-
-                adn.approvePembayaran(id);
-                break;
-
-            case "4":
-                adn.generateLaporan();
+                asrama.tampilkanSemuaKamar();
                 break;
 
             case "0":

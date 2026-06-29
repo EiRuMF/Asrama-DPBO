@@ -47,26 +47,21 @@ public class Kamar {
         return fasilitas;
     }
 
-    public void tambahPenghuni(String nama) {
-        if (daftarPenghuni.size() < kapasitas) {
-            daftarPenghuni.add(nama);
-        } else {
-            System.out.println("Kamar " + nomorKamar + " sudah penuh.");
-        }
-    }
-
     public boolean isKamarPenuh() {
         return daftarPenghuni.size() >= kapasitas;
     }
-
-    public void laporkanFasilitasRusak(String catatan) {
-        System.out.println("Laporan kerusakan kamar " + nomorKamar);
-        fasilitas.laporkanRusak(catatan);
+    
+    public void tambahPenghuni(String namaMahasiswa){
+        if(isKamarPenuh()){
+            System.out.println("Kamar sudah penuh.");
+            return;
+        }
+        daftarPenghuni.add(
+                namaMahasiswa);
     }
-
-    public void perbaikiFasilitas() {
-        System.out.println("Perbaikan fasilitas kamar " + nomorKamar);
-        fasilitas.tandaiSudahDiperbaiki();
+    
+    public void hapusPenghuni(String namaMahasiswa){
+        daftarPenghuni.remove(namaMahasiswa);
     }
 
     public void tampilkanInfo() {

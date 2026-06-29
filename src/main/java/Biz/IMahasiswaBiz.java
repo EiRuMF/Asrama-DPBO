@@ -30,6 +30,8 @@ public interface IMahasiswaBiz {
     void bayarSewa(String nim, int bulan);
 
     boolean sudahPunyaKamar(String nim);
+    
+    boolean hapusMahasiswa(String nim);
 
     void tampilkanSemuaMahasiswa();
 
