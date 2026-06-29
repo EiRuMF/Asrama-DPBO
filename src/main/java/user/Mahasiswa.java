@@ -39,7 +39,14 @@ public class Mahasiswa extends User {
     public void tampilkanMenu() {
     }
     
-
+    public void tambahKeluhan(Keluhan keluhan){
+        daftarKeluhan.add(keluhan);
+    }
+    
+    public List<Keluhan> getDaftarKeluhan(){
+        return daftarKeluhan;
+    }
+    
     public String getNim(){ 
         return nim; 
     }
@@ -48,9 +55,6 @@ public class Mahasiswa extends User {
     }
     public boolean isStatusPenghuni() {
         return statusPenghuni;
-    }
-    public List<Keluhan> getDaftarKeluhan() { 
-        return daftarKeluhan; 
     }
     
     public void assignKamar(String kamarId) {

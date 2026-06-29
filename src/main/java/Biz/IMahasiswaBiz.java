@@ -22,11 +22,13 @@ public interface IMahasiswaBiz {
     
     void assignKamar(String nim, String kamarId) throws KamarPenuhException;
     
-    void ajukanKeluhan(String nim, Keluhan keluhan);
+    void ajukanKeluhan(String nim, String judul, String deskripsi,String kategori);
     
     void tampilkanKeluhan(String nim);
     
     void bayarSewa(String nim, double nominal);
+    
+    void lihatTagihan(String nim);
     
     boolean sudahPunyaKamar(String nim);
 }

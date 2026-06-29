@@ -19,6 +19,7 @@ public class MahasiswaBiz implements IMahasiswaBiz{
     private List<Mahasiswa> daftarMahasiswa;
     private List<Keluhan> daftarKeluhan = new ArrayList<>();
     
+    
     private static final int KAPASITAS_KAMAR = 4;
     
     public MahasiswaBiz() {
@@ -51,7 +52,7 @@ public class MahasiswaBiz implements IMahasiswaBiz{
                 return m;
             }
         }
-        return null; // tidak ketemu
+        return null;
     }
     
     @Override
@@ -87,7 +88,7 @@ public class MahasiswaBiz implements IMahasiswaBiz{
     
     @Override    
     public void assignKamar(String nim, String kamarId) throws KamarPenuhException {
-        // Hitung berapa mahasiswa yang sudah di kamar ini
+        
         int jumlahPenghuni = 0;
         for (Mahasiswa m : daftarMahasiswa) {
             if (kamarId.equals(m.getKamarId())) {
@@ -95,20 +96,22 @@ public class MahasiswaBiz implements IMahasiswaBiz{
             }
         }
 
-        // Validasi - kalau sudah penuh, lempar exception
+        
         if (jumlahPenghuni >= KAPASITAS_KAMAR) {
             throw new KamarPenuhException(kamarId);
         }
 
-        // Kalau masih muat, baru di-assign
+        
         Mahasiswa mhs = cariByNim(nim);
         if (mhs != null) {
             mhs.assignKamar(kamarId);
         }
     }
+    
+    
 
     @Override
-    public void ajukanKeluhan(String nim, Keluhan keluhan) {
+    public void ajukanKeluhan(String nim, String judul, String deskripsi, String kategori) {
 
         Mahasiswa mhs = cariByNim(nim);
 
@@ -116,21 +119,27 @@ public class MahasiswaBiz implements IMahasiswaBiz{
             return;
         }
 
+        Keluhan keluhan = new Keluhan(judul,deskripsi,kategori);
+        
+        mhs.tambahKeluhan(keluhan);
+        
         daftarKeluhan.add(keluhan);
 
+
         System.out.println("Keluhan berhasil diajukan");
+        System.out.println("ID Keluhan : " + keluhan.getIdKeluhan());
     }
     
     @Override
     public void tampilkanKeluhan(String nim) {
+        
+        Mahasiswa mhs = cariByNim(nim);
 
-        if (daftarKeluhan.isEmpty()) {
-
-            System.out.println("Belum ada keluhan");
-             return;
+        if(mhs == null){
+            return;
         }
 
-        for (Keluhan k : daftarKeluhan) {
+        for (Keluhan k : mhs.getDaftarKeluhan()) {
 
             System.out.println("ID : " + k.getIdKeluhan());
 
@@ -138,9 +147,9 @@ public class MahasiswaBiz implements IMahasiswaBiz{
 
             System.out.println("Status : " + k.getStatus());
 
-            System.out.println("----------------");
         }
     }
+    
     
 
 
@@ -149,11 +158,24 @@ public class MahasiswaBiz implements IMahasiswaBiz{
         Mahasiswa mhs = cariByNim(nim);
         return mhs != null && mhs.isStatusPenghuni();
     }
+ 
+    
+    public void lihatTagihan(String nim) {
 
-    // Method tambahan khusus di class ini (boleh ada method di luar interface) 
-    public void tambahMahasiswa(Mahasiswa mhs) {
-        daftarMahasiswa.add(mhs);
+    Mahasiswa mhs = cariByNim(nim);
+
+    if (mhs == null) {
+        return;
     }
+
+    System.out.println("\n=== TAGIHAN ASRAMA ===");
+
+    System.out.println("Total Tagihan : Rp " + mhs.getTotalTagihan());
+
+    System.out.println("Sudah Dibayar : Rp " + mhs.getTotalDibayar());
+
+    System.out.println("Sisa Tagihan  : Rp "+ mhs.getSisaTagihan());
+}
     
     @Override
     public void bayarSewa(String nim, double nominal) {

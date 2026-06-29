@@ -8,6 +8,10 @@ package Biz;
  *
  * @author IVAN
  */
-public class Reportable {
-    
+public interface Reportable {
+    void buatLaporan();
+
+    String getStatus();
+
+    void updateStatus(String status);
 }

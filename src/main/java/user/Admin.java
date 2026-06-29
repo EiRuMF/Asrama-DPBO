@@ -17,8 +17,8 @@ public class Admin extends User {
     private Map<String, Mahasiswa> daftarMahasiswa = new HashMap<>();
     private List<String> daftarLaporan = new ArrayList<>();
 
-    public Admin(String id, String name,  String email, String password, String role) {
-        super(id, name, email, password, "ADMIN");
+    public Admin(String name, String id, String email, String password, String role) {
+        super(name, id, email, password, "ADMIN");
     }
     @Override
     public void tampilkanMenu() {

@@ -8,11 +8,12 @@ package pengaduan;
  *
  * @author IVAN
  */
+import Biz.Reportable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Keluhan {
+public class Keluhan implements Reportable{
     
     private static int counter = 1;
 
@@ -24,11 +25,10 @@ public class Keluhan {
     private String kategori;
     private List<Tanggapan> daftarTanggapan;
 
-    public Keluhan(String idKeluhan,
-                   String judul,
-                   String deskripsi,
-                   String kategori) {   
+    public Keluhan(String judul,String deskripsi,String kategori) {   
         this.idKeluhan = "KL" + String.format("%03d", counter++);
+        
+        
         this.judul = judul;
         this.deskripsi = deskripsi;
         this.kategori = kategori;
@@ -38,18 +38,6 @@ public class Keluhan {
         this.daftarTanggapan = new ArrayList<>();
     }
     
-    
-    public void buatLaporan() {
-        System.out.println(this);
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void updateStatus(String status) {
-        this.status = status;
-    }
 
     public void tambahTanggapan(Tanggapan tanggapan) {
         daftarTanggapan.add(tanggapan);
@@ -81,6 +69,21 @@ public class Keluhan {
 
     public String getKategori() {
         return kategori;
+    }
+    
+    @Override
+    public void buatLaporan() {
+        System.out.println(this);
+    }
+
+    @Override
+    public String getStatus() {
+        return status;
+    }
+
+    @Override
+    public void updateStatus(String status) {
+        this.status = status;
     }
 
     @Override

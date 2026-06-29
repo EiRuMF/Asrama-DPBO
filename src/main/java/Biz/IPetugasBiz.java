@@ -13,5 +13,12 @@ import java.util.List;
 public interface IPetugasBiz {
     List<Petugas> getAllPetugas();
     
-    public void cekKeluhan();  
+    
+
+    
+
+    
+
+    
+
 }

@@ -26,7 +26,7 @@ import pengaduan.Keluhan;
 public class Main {
     private static MahasiswaBiz mahasiswaBiz = new MahasiswaBiz();
     private static AdminBiz adminBiz = new AdminBiz();
-    private static PetugasBiz petugasBiz     = new PetugasBiz();
+    private static PetugasBiz petugasBiz = new PetugasBiz();
     private static Scanner scanner = new Scanner(System.in);
 
     private static User prosesLogin(String email, String password)
@@ -111,11 +111,10 @@ public class Main {
 
         while(aktif){
             System.out.println("\n=== MENU MAHASISWA ===");
-            System.out.println("1. Lihat Info Kamar");
-            System.out.println("2. Daftar Kamar");
-            System.out.println("3. Ajukan Keluhan");
-            System.out.println("4. Lihat Status Keluhan");
-            System.out.println("5. Bayar Sewa");
+            System.out.println("1. Lihat Info Kamar");        
+            System.out.println("2. Ajukan Keluhan");
+            System.out.println("3. Lihat Status Keluhan");
+            System.out.println("4. Bayar Sewa");
             System.out.println("0. Logout");
 
             System.out.println("Pilih menu : ");
@@ -127,32 +126,29 @@ public class Main {
                 break;
 
                 case "2":
-                    System.out.println("Daftar kamar kamu");
-                    mhs.assignKamar(mhs.getNim());
-
-                case "3":
                     System.out.println("Judul : ");
                     String judul = scanner.nextLine();
                     
                     System.out.println("Deskripsi : ");
                     String deskripsi = scanner.nextLine();
                     
-                    
-                    Keluhan keluhan = new Keluhan("KL", judul, deskripsi, "Fasilitas");
-                    
-                    
-                    mahasiswaBiz.ajukanKeluhan(mhs.getNim(),keluhan);
+                    System.out.print("Kategori : ");
+                    String kategori = scanner.nextLine();
+                                 
+                    mahasiswaBiz.ajukanKeluhan(mhs.getNim(),judul, deskripsi, kategori);
                     break;
                 
-                case "4":
+                case "3":
                     mahasiswaBiz.tampilkanKeluhan(mhs.getNim());
                     break;
                     
-                case "5":
-                    System.out.println("Jumlah Bulan : ");
-                    int bulan = Integer.parseInt(scanner.nextLine());
+                case "4":
+                    mahasiswaBiz.lihatTagihan(mhs.getNim());
                     
-                    mahasiswaBiz.bayarSewa(mhs.getNim(), bulan);
+                    System.out.println("Masukkan nominal pembayaran : ");
+                    double nominal = Double.parseDouble(scanner.nextLine());
+                    
+                    mahasiswaBiz.bayarSewa(mhs.getNim(), nominal);
                     break;
                     
                 case "0":
