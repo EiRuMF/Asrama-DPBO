@@ -10,6 +10,7 @@ package Biz;
  */
 import user.Mahasiswa;
 import exception.KamarPenuhException;
+import exception.PembayaranGagalException;
 import java.util.List;
 import pengaduan.Keluhan;
 
@@ -20,13 +21,24 @@ public interface IMahasiswaBiz {
     
     void lihatInfoKamar(String nim);
     
+    void assignKamar(String nim, String kamarId)
+            throws KamarPenuhException;
+    
     void ajukanKeluhan(String nim, String judul, String deskripsi,String kategori);
     
     void tampilkanKeluhan(String nim);
     
-    void bayarSewa(String nim, double nominal);
+    void bayarSewa(String nim, double nominal)
+    throws PembayaranGagalException;
+    
+    boolean sudahPunyaKamar(String nim);
+    
+    boolean hapusMahasiswa(String nim);
     
     void lihatTagihan(String nim);
     
-    boolean sudahPunyaKamar(String nim);
+    void tampilkanSemuaMahasiswa();
+
+    void tampilkanDetailMahasiswa(String nim);
+    
 }

@@ -15,6 +15,8 @@ import user.User;
 import user.Mahasiswa;
 import user.Petugas;
 import user.Admin;
+import Asrama.Asrama;
+import Asrama.Kamar;
 
 import exception.LoginGagalException;
 import exception.PembayaranGagalException;
@@ -29,6 +31,7 @@ public class Main {
     private static AdminBiz adminBiz = new AdminBiz();
     private static PetugasBiz petugasBiz = new PetugasBiz(mahasiswaBiz);
     private static Scanner scanner = new Scanner(System.in);
+    private static Asrama asrama = new Asrama("Asrama Putra");
 
     private static User prosesLogin(String email, String password)
             throws LoginGagalException {
@@ -163,7 +166,194 @@ public class Main {
         }
     }
 
-    private static void menuAdmin(Admin adn){}
+    private static void menuAdmin(Admin adn){
+
+    boolean aktif = true;
+
+    while(aktif){
+
+        adn.tampilkanMenu();
+
+        System.out.print("Pilih menu : ");
+        String pilihan = scanner.nextLine();
+
+        switch(pilihan){
+
+            case "1":
+                boolean kelolaMahasiswa = true;
+
+                while (kelolaMahasiswa) {
+                    System.out.println("\n===== KELOLA MAHASISWA =====");
+                    System.out.println("1. Lihat Semua Mahasiswa");
+                    System.out.println("2. Tambah Mahasiswa");
+                    System.out.println("3. Hapus Mahasiswa");
+                    System.out.println("4. Cari Mahasiswa");
+                    System.out.println("5. Assign Kamar");
+                    System.out.println("0. Kembali");
+
+                    System.out.print("Pilih : ");
+                    String pilih = scanner.nextLine();
+
+                    switch (pilih) {
+                        case "1":
+                            mahasiswaBiz.tampilkanSemuaMahasiswa();
+                            break;
+
+                        case "2":
+                            System.out.print("ID : ");
+                            String id = scanner.nextLine();
+
+                            System.out.print("Nama : ");
+                            String nama = scanner.nextLine();
+
+                            System.out.print("Email : ");
+                            String email = scanner.nextLine();
+
+                            System.out.print("Password : ");
+                            String password = scanner.nextLine();
+
+                            System.out.print("NIM : ");
+                            String nim = scanner.nextLine();
+
+                            Mahasiswa mhs = new Mahasiswa(id, nama, email, password, nim);
+                            mahasiswaBiz.tambahMahasiswa(mhs);
+                            System.out.println("Mahasiswa berhasil ditambahkan.");
+                            break;
+
+                        case "3":
+                            System.out.print("Masukkan NIM : ");
+                            String nimHapus = scanner.nextLine();
+
+                            boolean berhasil =
+                                    mahasiswaBiz.hapusMahasiswa(nimHapus);
+
+                            if (berhasil) {
+
+                                System.out.println(
+                                        "Mahasiswa berhasil dihapus.");
+
+                            } else {
+
+                                System.out.println(
+                                        "Mahasiswa tidak ditemukan.");
+                            }
+                            break;
+
+                        case "4":
+                            System.out.print("Masukkan NIM : ");
+                            String nimCari = scanner.nextLine();
+                            mahasiswaBiz.tampilkanDetailMahasiswa(nimCari);
+                            break;
+
+                        case "5":
+                            System.out.print("NIM : ");
+                            String nimAssign = scanner.nextLine();
+
+                            System.out.print("Nomor Kamar : ");
+                            String kamar = scanner.nextLine();
+
+                            try {
+                                mahasiswaBiz.assignKamar(nimAssign, kamar);
+                                System.out.println("Kamar berhasil diberikan.");
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                            break;
+
+                        case "0":
+                            kelolaMahasiswa = false;
+                            break;
+
+                        default:
+                            System.out.println("Pilihan tidak valid.");
+                    }
+                }
+                break;
+
+            case "2":
+                boolean kelolaKamar = true;
+                while(kelolaKamar){
+                    System.out.println("\n=== KELOLA DATA KAMAR ===");
+                    System.out.println("1. Tambah Kamar");
+                    System.out.println("2. Hapus Kamar");
+                    System.out.println("3. Lihat Semua Kamar");
+                    System.out.println("4. Tambah Penghuni");
+                    System.out.println("0. Kembali");
+
+                    System.out.print("Pilih : ");
+                    String pilihKamar = scanner.nextLine();
+
+                    switch(pilihKamar){
+
+                        case "1":
+
+                            System.out.print("Nomor Kamar : ");
+                            String nomor = scanner.nextLine();
+
+                            System.out.print("Lantai : ");
+                            int lantai = Integer.parseInt(scanner.nextLine());
+
+                            Kamar kamarBaru = new Kamar(nomor, lantai);
+
+                            asrama.tambahKamar(kamarBaru);
+                            System.out.println("Kamar berhasil ditambahkan.");
+                            break;
+                            
+                        case "2":
+                            System.out.print("Nomor Kamar : ");
+                            String nomorHapus = scanner.nextLine();
+
+                            if(asrama.hapusKamar(nomorHapus)){
+                                System.out.println("Kamar berhasil dihapus.");
+                            }else{
+                                System.out.println("Kamar tidak ditemukan.");
+                            }
+                            break;
+                            
+                        case "3":
+                            asrama.tampilkanSemuaKamar();
+                            break;
+                            
+                        case "4":
+                            System.out.print("Nomor Kamar : ");
+                            String nomorCari = scanner.nextLine();
+
+                            Kamar kamar =
+                                    asrama.cariKamar(nomorCari);
+
+                            if(kamar != null){
+
+                                System.out.print("Nama Penghuni : ");
+                                String nama = scanner.nextLine();
+
+                                kamar.tambahPenghuni(nama);
+
+                            }else{
+
+                                System.out.println("Kamar tidak ditemukan.");
+                            }
+                            break;
+                            
+                        case "0":
+                            kelolaKamar = false;
+                            break;
+                    }
+                }
+                break;
+
+            case "3":
+                asrama.tampilkanSemuaKamar();
+                break;
+
+            case "0":
+                aktif = false;
+                break;
+
+            default:
+                System.out.println("Pilihan tidak valid.");
+        }
+    }
+}
     private static void menuPetugas(Petugas ptg){
         boolean aktif = true;
 

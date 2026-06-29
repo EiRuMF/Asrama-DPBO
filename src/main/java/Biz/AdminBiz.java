@@ -11,7 +11,6 @@ package Biz;
 import user.Admin;
 import java.util.List;
 import java.util.ArrayList;
-import user.Mahasiswa;
 public class AdminBiz implements IAdminBiz{
     private List<Admin> daftarAdmin;
 
@@ -32,57 +31,10 @@ public class AdminBiz implements IAdminBiz{
         daftarAdmin.add(adn2);
     }
     
-    public void lihatPembayaranMahasiswa(MahasiswaBiz mahasiswaBiz){
-
-    System.out.println("\n===== LIST PEMBAYARAN MAHASISWA =====");
-
-    for(Mahasiswa m : mahasiswaBiz.getAllMahasiswa()){
-
-        System.out.println("--------------------------------");
-
-        System.out.println("Nama          : " + m.getName());
-
-        System.out.println("Tagihan       : Rp " + m.getTotalTagihan());
-
-        System.out.println("Sudah Dibayar : Rp " + m.getTotalDibayar());
-
-        System.out.println("Sisa          : Rp " + m.getSisaTagihan());
-
-        if(m.isLunas()){
-
-            System.out.println("Status        : LUNAS");
-
-        }else{
-
-            System.out.println("Status        : BELUM LUNAS");
-
-        }
-
-    }
-
-}
-    
     
     
     @Override    
     public List<Admin> getAllAdmin() {
         return daftarAdmin;
     }
-    
-
-    
-
-    @Override
-    public void hapusMahasiswa() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    
-
-    @Override
-    public void approvePembayaran(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
-    
 }

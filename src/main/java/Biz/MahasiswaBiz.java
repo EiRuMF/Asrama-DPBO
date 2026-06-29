@@ -91,6 +91,28 @@ public class MahasiswaBiz implements IMahasiswaBiz{
         return daftarKeluhan;
     }
     
+    @Override    
+    public void assignKamar(String nim, String kamarId) throws KamarPenuhException {
+        // Hitung berapa mahasiswa yang sudah di kamar ini
+        int jumlahPenghuni = 0;
+        for (Mahasiswa m : daftarMahasiswa) {
+            if (kamarId.equals(m.getKamarId())) {
+                jumlahPenghuni++;
+            }
+        }
+
+        // Validasi - kalau sudah penuh, lempar exception
+        if (jumlahPenghuni >= KAPASITAS_KAMAR) {
+            throw new KamarPenuhException(kamarId);
+        }
+
+        // Kalau masih muat, baru di-assign
+        Mahasiswa mhs = cariByNim(nim);
+        if (mhs != null) {
+            mhs.assignKamar(kamarId);
+        }
+    }
+    
 
     @Override
     public void ajukanKeluhan(String nim, String judul, String deskripsi, String kategori) {
@@ -131,8 +153,6 @@ public class MahasiswaBiz implements IMahasiswaBiz{
 
         }
     }
-    
-    
 
 
     @Override
@@ -184,6 +204,61 @@ public class MahasiswaBiz implements IMahasiswaBiz{
         if (mhs.getSisaTagihan() == 0) {
             System.out.println("Status : LUNAS");
         }
+    }
+    
+    public void tambahMahasiswa(Mahasiswa mhs) {
+        daftarMahasiswa.add(mhs);
+    }
+    
+    public boolean hapusMahasiswa(String nim){
+        Mahasiswa mhs = cariByNim(nim);
+        if(mhs != null){
+            daftarMahasiswa.remove(mhs);
+            return true;
+        }
+        return false;
+    }
+    
+    public void tampilkanSemuaMahasiswa() {
+        if (daftarMahasiswa.isEmpty()) {
+
+            System.out.println("Belum ada data mahasiswa.");
+            return;
+        }
+
+        System.out.println("\n===== DAFTAR MAHASISWA =====");
+
+        for (Mahasiswa m : daftarMahasiswa) {
+
+            System.out.println("----------------------------");
+            System.out.println("ID      : " + m.getId());
+            System.out.println("Nama    : " + m.getName());
+            System.out.println("NIM     : " + m.getNim());
+            System.out.println("Email   : " + m.getEmail());
+
+            if (m.getKamarId() == null) {
+                System.out.println("Kamar   : Belum ada");
+            } else {
+                System.out.println("Kamar   : " + m.getKamarId());
+            }
+        }
+    }
+    
+    public void tampilkanDetailMahasiswa(String nim) {
+        Mahasiswa m = cariByNim(nim);
+
+        if (m == null) {
+
+            System.out.println("Mahasiswa tidak ditemukan.");
+            return;
+        }
+
+        System.out.println("\n===== DETAIL MAHASISWA =====");
+        System.out.println("ID      : " + m.getId());
+        System.out.println("Nama    : " + m.getName());
+        System.out.println("NIM     : " + m.getNim());
+        System.out.println("Email   : " + m.getEmail());
+        System.out.println("Kamar   : " + m.getKamarId());
     }
         
 }
